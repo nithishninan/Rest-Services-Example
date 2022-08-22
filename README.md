@@ -245,3 +245,27 @@ class CoursewsApplicationTests {
 
 •	Run the Spring project and troubleshoot if there are any issues. Once everything is fine,open Postman and check for GET, POST, PUT, DELETE in the url mentioned below:-
 localhost:8080/coursews/services/courseservice/courses
+
+
+•	For displaying the results in json format, we need to configure using following steps:-
+	1.	Modify pom.xml adding dependency of jax-rs
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-xc</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+	2.	Modify application.properties in the following format, check for the available classes:-
+		#cxf.jaxrs.component-scan=true
+		cxf.jaxrs.classes-scan=true
+		cxf.jaxrs.classes-scan-packages=org.codehaus.jackson.jaxrs,com.stark.coursews
+	3.	Check for CourseService.java having following format in the code:-
+		@Consumes("application/xml,application/json")
+		@Produces("application/xml,application/json")
+	4.	If not receiving values in json, In postman, check for cookies, switch to headers adjacent to Authorization, under key column type "Accept" 		    and under value column type "application/json"
+
